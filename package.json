@@ -1,0 +1,9 @@
+{
+  "name": "gau-ai-systems-public",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-locales.mjs",
+    "test": "node scripts/test-site.mjs"
+  }
+}

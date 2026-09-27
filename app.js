@@ -42,4 +42,71 @@
 
   const year = $('#year');
   if (year) year.textContent = new Date().getFullYear();
+
+  const precheckForm = $('#precheck-form');
+  const precheckOutput = $('#precheck-output');
+  const precheckStatus = $('#precheck-status');
+  const copyPrecheck = $('#copy-precheck');
+  const needLabels = {
+    core: 'Cài lõi local-only, một người dùng',
+    custom: 'VPS / truy cập mạng / nhiều người / kênh chat',
+    sensitive: 'Dữ liệu nhạy cảm hoặc yêu cầu tuân thủ',
+    unsure: 'Chưa rõ'
+  };
+
+  precheckForm?.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!precheckForm.checkValidity()) {
+      precheckForm.reportValidity();
+      if (precheckStatus) precheckStatus.textContent = 'Vui lòng hoàn thành bốn trường bắt buộc.';
+      return;
+    }
+
+    const os = $('#pc-os')?.value || '';
+    const admin = $('#pc-admin')?.value || '';
+    const model = $('#pc-model')?.value || '';
+    const need = $('#pc-need')?.value || '';
+    const note = ($('#pc-note')?.value || '').trim();
+    const needsSeparateReview = admin !== 'yes' || model !== 'yes' || need !== 'core';
+    const outcome = needsSeparateReview
+      ? 'Cần khảo sát thêm; chưa thể xem là phù hợp gói lõi 20 USD.'
+      : 'Có dấu hiệu phù hợp bước sàng lọc ban đầu; vẫn cần đội ngũ xác minh readiness trước khi nhận đơn.';
+    const lines = [
+      'YÊU CẦU KHẢO SÁT OPENCLAW — KHÔNG CHỨA SECRET',
+      `Hệ điều hành: ${os}`,
+      `Quyền admin: ${admin === 'yes' ? 'Có' : 'Không / chưa chắc'}`,
+      `Tài khoản model AI: ${model === 'yes' ? 'Đã có và tự thanh toán' : 'Chưa có / cần tư vấn'}`,
+      `Nhu cầu: ${needLabels[need] || need}`,
+      `Mô tả: ${note || 'Chưa cung cấp'}`,
+      `Kết quả tự sàng lọc: ${outcome}`,
+      'Tôi hiểu website chưa nhận thanh toán hoặc xác nhận lịch và tôi sẽ không gửi mật khẩu, OTP, API key, token hay dữ liệu khách hàng.'
+    ];
+    if (precheckOutput) precheckOutput.value = lines.join('\n');
+    if (copyPrecheck) copyPrecheck.disabled = false;
+    const title = $('#precheck-result-title');
+    if (title) title.textContent = needsSeparateReview ? 'Cần khảo sát thêm' : 'Có thể gửi yêu cầu khảo sát';
+    if (precheckStatus) precheckStatus.textContent = 'Đã tạo bản tóm tắt cục bộ. Không có dữ liệu nào được gửi đi.';
+  });
+
+  precheckForm?.addEventListener('reset', () => {
+    setTimeout(() => {
+      if (precheckOutput) precheckOutput.value = '';
+      if (copyPrecheck) copyPrecheck.disabled = true;
+      const title = $('#precheck-result-title');
+      if (title) title.textContent = 'Bản tóm tắt chưa được tạo';
+      if (precheckStatus) precheckStatus.textContent = 'Đã xóa dữ liệu precheck khỏi biểu mẫu.';
+    }, 0);
+  });
+
+  copyPrecheck?.addEventListener('click', async () => {
+    if (!precheckOutput?.value) return;
+    try {
+      await navigator.clipboard.writeText(precheckOutput.value);
+      if (precheckStatus) precheckStatus.textContent = 'Đã sao chép. Bạn quyết định có gửi nội dung hay không.';
+    } catch {
+      precheckOutput.focus();
+      precheckOutput.select();
+      if (precheckStatus) precheckStatus.textContent = 'Trình duyệt chặn clipboard; nội dung đã được chọn để bạn sao chép thủ công.';
+    }
+  });
 })();

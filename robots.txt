@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://160218tt-sys.github.io/gau-ai-systems/sitemap.xml

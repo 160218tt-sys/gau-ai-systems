@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071521"/><stop offset="1" stop-color="#0f5558"/></linearGradient><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe59b"/><stop offset="1" stop-color="#d8a943"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#000" flood-opacity=".38"/></filter></defs>
+<rect width="1024" height="1024" rx="220" fill="url(#bg)"/>
+<circle cx="512" cy="490" r="342" fill="#0a2028" stroke="#54f4d4" stroke-width="16" filter="url(#s)"/>
+<circle cx="316" cy="254" r="126" fill="#0a2028" stroke="#54f4d4" stroke-width="16"/><circle cx="708" cy="254" r="126" fill="#0a2028" stroke="#54f4d4" stroke-width="16"/>
+<path d="M288 478 C324 272 700 272 736 478 C765 699 645 784 512 784 C379 784 259 699 288 478Z" fill="#12343e"/>
+<circle cx="414" cy="485" r="30" fill="#f8faf9"/><circle cx="610" cy="485" r="30" fill="#f8faf9"/>
+<path d="M440 610 Q512 666 584 610" fill="none" stroke="url(#gold)" stroke-width="28" stroke-linecap="round"/>
+<path d="M512 532 l35 47 -35 29 -35-29z" fill="url(#gold)"/>
+<path d="M756 659 l70 -48 52 25 -49 38 55 34 -77 17z" fill="url(#gold)"/>
+<text x="512" y="913" text-anchor="middle" fill="#f5fbfa" font-family="Segoe UI,Arial,sans-serif" font-size="76" font-weight="800" letter-spacing="6">GẤU AI</text>
+</svg>

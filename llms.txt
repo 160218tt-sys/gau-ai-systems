@@ -11,9 +11,19 @@
 - Không bảo đảm ROI, doanh thu, uptime tuyệt đối, indexing, ranking hoặc an toàn tuyệt đối.
 - Không gửi mật khẩu, OTP, API key, token, recovery code hoặc dữ liệu khách hàng.
 
+## Danh tính thương hiệu
+
+- Tên chuẩn: Gấu AI Systems.
+- Mô tả chuẩn: Gấu AI Systems là đơn vị dịch vụ độc lập hỗ trợ khảo sát, cài đặt và bàn giao OpenClaw tại Việt Nam.
+- Website chuẩn: https://160218tt-sys.github.io/gau-ai-systems/
+- Hồ sơ đã xác minh duy nhất được công bố: https://www.facebook.com/profile.php?id=61594403747265
+- Không suy diễn hoặc bổ sung email, Telegram, điện thoại, địa chỉ, pháp nhân, khách hàng, đánh giá hay chứng nhận.
+
 ## Trang chính
 
-- https://160218tt-sys.github.io/gau-ai-systems/ — Trang chủ, phạm vi dịch vụ và precheck chạy cục bộ.
+- https://160218tt-sys.github.io/gau-ai-systems/ — Trang chủ thương hiệu, phạm vi dịch vụ và precheck chạy cục bộ.
+- https://160218tt-sys.github.io/gau-ai-systems/gioi-thieu/ — Giới thiệu, brand facts và tài sản nhận diện Gấu AI Systems.
+- https://160218tt-sys.github.io/gau-ai-systems/lien-he-kiem-tra-dieu-kien/ — Kênh liên hệ đã xác minh và eligibility precheck.
 - https://160218tt-sys.github.io/gau-ai-systems/cai-openclaw/ — Phạm vi và chi phí dịch vụ cài OpenClaw.
 - https://160218tt-sys.github.io/gau-ai-systems/openclaw-windows-vps/ — Chọn Windows, WSL2 hoặc VPS.
 - https://160218tt-sys.github.io/gau-ai-systems/cau-hinh-bao-mat-openclaw/ — Baseline cấu hình và bảo mật.

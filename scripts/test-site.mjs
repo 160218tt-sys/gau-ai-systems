@@ -6,6 +6,10 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const ORIGIN = 'https://160218tt-sys.github.io/gau-ai-systems';
 const routes = [
   {path:'index.html',url:`${ORIGIN}/`,lang:'vi'},
+  {path:'cai-openclaw/index.html',url:`${ORIGIN}/cai-openclaw/`,lang:'vi',buyerTask:true},
+  {path:'openclaw-windows-vps/index.html',url:`${ORIGIN}/openclaw-windows-vps/`,lang:'vi',buyerTask:true},
+  {path:'cau-hinh-bao-mat-openclaw/index.html',url:`${ORIGIN}/cau-hinh-bao-mat-openclaw/`,lang:'vi',buyerTask:true},
+  {path:'khac-phuc-loi-openclaw/index.html',url:`${ORIGIN}/khac-phuc-loi-openclaw/`,lang:'vi',buyerTask:true},
   {path:'en/index.html',url:`${ORIGIN}/en/`,lang:'en'},
   {path:'in/index.html',url:`${ORIGIN}/in/`,lang:'en-IN'},
   {path:'sg/index.html',url:`${ORIGIN}/sg/`,lang:'en-SG'},
@@ -40,27 +44,37 @@ for (const route of routes) {
   const canonical = links(html).find(t => /\brel=["']canonical["']/i.test(t));
   ok(canonical && /\bhref=["']([^"']+)["']/i.exec(canonical)?.[1] === route.url, `${route.path}: self canonical`);
   const found = new Map(links(html).filter(t => /\brel=["']alternate["']/i.test(t)).map(t => [/\bhreflang=["']([^"']+)["']/i.exec(t)?.[1], /\bhref=["']([^"']+)["']/i.exec(t)?.[1]]));
-  ok(found.size === alternates.size && [...alternates].every(([k,v]) => found.get(k) === v), `${route.path}: reciprocal hreflang and x-default`);
+  if (route.buyerTask) ok(found.get('vi') === route.url && found.get('x-default') === `${ORIGIN}/en/`, `${route.path}: scoped vi/x-default hreflang`);
+  else ok(found.size === alternates.size && [...alternates].every(([k,v]) => found.get(k) === v), `${route.path}: reciprocal hreflang and x-default`);
   ok(metas(html,'property','og:title') && metas(html,'property','og:description') && metas(html,'property','og:url') === route.url, `${route.path}: localized Open Graph`);
   const jsonBlocks = [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
   ok(jsonBlocks.length > 0, `${route.path}: JSON-LD present`);
-  for (const block of jsonBlocks) JSON.parse(block[1]);
+  const jsonDocs = jsonBlocks.map(block => JSON.parse(block[1]));
   ok(true, `${route.path}: JSON-LD parses`);
   ok((html.match(/<h1\b/gi) || []).length === 1, `${route.path}: single h1`);
   for (const image of html.match(/<img\b[^>]*>/gi) || []) ok(/\balt=["'][^"']*["']/i.test(image), `${route.path}: image alt`);
   ok(/class=["'][^"']*announcement/.test(html) && /(survey|survei|tinjauan|khảo sát|意向|関心|관심)/i.test(html), `${route.path}: readiness banner`);
-  ok(/(?:20 USD|USD 20|20 美元|20\s*달러|20米ドル)/i.test(html), `${route.path}: active offer`);
-  if (route.path !== 'index.html') {
+  if (route.buyerTask) {
+    const schemaTypes = jsonDocs.flatMap(doc => (doc['@graph'] || [doc]).map(item => item['@type']));
+    for (const type of ['Organization','Service','BreadcrumbList','FAQPage']) ok(schemaTypes.includes(type), `${route.path}: ${type} schema`);
+    ok(/mã nguồn mở/i.test(html), `${route.path}: open-source disclosure`);
+    ok(/chưa nhận tiền|chưa có payment/i.test(html) && /chưa xác nhận lịch|scheduling/i.test(html), `${route.path}: payment and scheduling ceiling`);
+    ok(/không bảo đảm|không cam kết/i.test(html), `${route.path}: no-guarantee disclosure`);
+    ok(/#precheck|ghi nhận quan tâm/i.test(html), `${route.path}: precheck/interest-only CTA`);
+  } else {
+    ok(/(?:20 USD|USD 20|20 美元|20\s*달러|20米ドル)/i.test(html), `${route.path}: active offer`);
+  }
+  if (route.path !== 'index.html' && !route.buyerTask) {
     ok(!/<form\b/i.test(html), `${route.path}: no form`);
     ok(/no form|formulir|borang|フォーム|양식|表單|表单/i.test(html), `${route.path}: explicitly static/no backend`);
-  } else {
+  } else if (route.path === 'index.html') {
     ok(/id="precheck-form"[^>]*novalidate/i.test(html) && /không gửi hoặc lưu dữ liệu/i.test(html), 'index.html: existing precheck is explicitly client-side/nontransmitting');
   }
   ok(!/(google-analytics|googletagmanager|gtag\s*\(|facebook\.net\/.*pixel|segment\.com|mixpanel|hotjar)/i.test(html), `${route.path}: no analytics`);
   ok(/independent|độc lập|independen|bebas|独立|독립/i.test(html), `${route.path}: independent disclaimer`);
   ok(/secret|API key|APIキー|API 密钥|API 金鑰|API 키/i.test(html), `${route.path}: customer secret boundary`);
   ok(/third-party|bên thứ ba|pihak ketiga|第三者|제3자|第三方/i.test(html), `${route.path}: third-party cost boundary`);
-  ok(/local-only|lokal|setempat|ローカル|로컬|本機|本机/i.test(html), `${route.path}: local-only Gateway`);
+  if (!route.buyerTask) ok(/local-only|lokal|setempat|ローカル|로컬|本機|本机/i.test(html), `${route.path}: local-only Gateway`);
 }
 
 const zh = await readFile(resolve(root,'zh-hans/index.html'),'utf8');

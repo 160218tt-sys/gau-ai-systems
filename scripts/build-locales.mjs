@@ -201,7 +201,15 @@ for (const route of routes) {
   await writeFile(resolve(dir, 'index.html'), page(route), 'utf8');
 }
 
-const sitemapEntries = ['', ...routes.map(r=>`${r.slug}/`), 'research.html'];
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries.map(path=>`  <url><loc>${base}/${path}</loc><lastmod>${checked}</lastmod></url>`).join('\n')}\n</urlset>\n`;
+const sitemapEntries = [
+  {path:'',lastmod:checked},
+  {path:'cai-openclaw/',lastmod:'2026-09-28'},
+  {path:'openclaw-windows-vps/',lastmod:'2026-09-28'},
+  {path:'cau-hinh-bao-mat-openclaw/',lastmod:'2026-09-28'},
+  {path:'khac-phuc-loi-openclaw/',lastmod:'2026-09-28'},
+  ...routes.map(r=>({path:`${r.slug}/`,lastmod:checked})),
+  {path:'research.html',lastmod:checked}
+];
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries.map(entry=>`  <url><loc>${base}/${entry.path}</loc><lastmod>${entry.lastmod}</lastmod></url>`).join('\n')}\n</urlset>\n`;
 await writeFile(resolve(root, 'sitemap.xml'), sitemap, 'utf8');
 console.log(`Built ${routes.length} locale routes and sitemap.xml.`);

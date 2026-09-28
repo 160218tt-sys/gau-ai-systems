@@ -1,0 +1,29 @@
+# Gấu AI Systems
+
+> Website tiếng Việt của một đơn vị dịch vụ độc lập đang tiếp nhận yêu cầu khảo sát/ghi nhận quan tâm cho hỗ trợ cài OpenClaw. OpenClaw là phần mềm mã nguồn mở. Gấu AI Systems không thuộc, không đại diện và không được OpenClaw tài trợ, chứng nhận hoặc chứng thực.
+
+## Trạng thái và giới hạn
+
+- Chưa nhận thanh toán hoặc xác nhận lịch; payment và scheduling chưa khả dụng cho đến khi readiness gate cho phép.
+- CTA chỉ là kiểm tra điều kiện hoặc ghi nhận quan tâm.
+- Mức 20 USD là phí dịch vụ dự kiến cho một máy đủ điều kiện, không phải phí bản quyền OpenClaw.
+- Phí model, API, cloud/VPS, kênh chat và dịch vụ bên thứ ba tách riêng.
+- Không bảo đảm ROI, doanh thu, uptime tuyệt đối, indexing, ranking hoặc an toàn tuyệt đối.
+- Không gửi mật khẩu, OTP, API key, token, recovery code hoặc dữ liệu khách hàng.
+
+## Trang chính
+
+- https://160218tt-sys.github.io/gau-ai-systems/ — Trang chủ, phạm vi dịch vụ và precheck chạy cục bộ.
+- https://160218tt-sys.github.io/gau-ai-systems/cai-openclaw/ — Phạm vi và chi phí dịch vụ cài OpenClaw.
+- https://160218tt-sys.github.io/gau-ai-systems/openclaw-windows-vps/ — Chọn Windows, WSL2 hoặc VPS.
+- https://160218tt-sys.github.io/gau-ai-systems/cau-hinh-bao-mat-openclaw/ — Baseline cấu hình và bảo mật.
+- https://160218tt-sys.github.io/gau-ai-systems/khac-phuc-loi-openclaw/ — Khắc phục lỗi theo bằng chứng.
+- https://160218tt-sys.github.io/gau-ai-systems/research.html — Nguồn và phương pháp.
+- https://160218tt-sys.github.io/gau-ai-systems/feed.xml — Atom feed cập nhật.
+
+## Nguồn chính thức ưu tiên
+
+- https://docs.openclaw.ai/
+- https://github.com/openclaw/openclaw
+
+Last reviewed: 2026-09-28

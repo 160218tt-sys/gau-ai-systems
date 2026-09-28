@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="vi">
+  <title>Cập nhật Gấu AI Systems</title>
+  <subtitle>Hướng dẫn độc lập về điều kiện, chi phí, bảo mật và khắc phục lỗi khi cài OpenClaw tại Việt Nam.</subtitle>
+  <id>https://160218tt-sys.github.io/gau-ai-systems/feed.xml</id>
+  <link rel="self" type="application/atom+xml" href="https://160218tt-sys.github.io/gau-ai-systems/feed.xml"/>
+  <link rel="alternate" type="text/html" href="https://160218tt-sys.github.io/gau-ai-systems/"/>
+  <updated>2026-09-28T03:00:00+07:00</updated>
+  <author><name>Gấu AI Systems</name><uri>https://160218tt-sys.github.io/gau-ai-systems/</uri></author>
+  <rights>Gấu AI Systems là đơn vị dịch vụ độc lập, không thuộc hoặc được OpenClaw chứng thực.</rights>
+  <entry>
+    <title>Dịch vụ cài OpenClaw: phạm vi và chi phí rõ ràng</title>
+    <id>https://160218tt-sys.github.io/gau-ai-systems/cai-openclaw/</id>
+    <link href="https://160218tt-sys.github.io/gau-ai-systems/cai-openclaw/"/>
+    <updated>2026-09-28T03:00:00+07:00</updated>
+    <summary>Phạm vi gói lõi dự kiến 20 USD cho một máy đủ điều kiện; phí model, API, cloud và bên thứ ba tính riêng. Chỉ nhận yêu cầu khảo sát, chưa nhận thanh toán hoặc xác nhận lịch.</summary>
+  </entry>
+  <entry>
+    <title>Cài OpenClaw trên Windows hay VPS?</title>
+    <id>https://160218tt-sys.github.io/gau-ai-systems/openclaw-windows-vps/</id>
+    <link href="https://160218tt-sys.github.io/gau-ai-systems/openclaw-windows-vps/"/>
+    <updated>2026-09-28T03:00:00+07:00</updated>
+    <summary>So sánh Windows, WSL2 và VPS theo nhu cầu vận hành, quyền quản trị, mạng, chi phí và ranh giới tin cậy.</summary>
+  </entry>
+  <entry>
+    <title>Cấu hình bảo mật OpenClaw: baseline trước khi mở rộng</title>
+    <id>https://160218tt-sys.github.io/gau-ai-systems/cau-hinh-bao-mat-openclaw/</id>
+    <link href="https://160218tt-sys.github.io/gau-ai-systems/cau-hinh-bao-mat-openclaw/"/>
+    <updated>2026-09-28T03:00:00+07:00</updated>
+    <summary>Gateway loopback, xác thực, quyền tối thiểu, secret do khách giữ, security audit và ranh giới tin cậy.</summary>
+  </entry>
+  <entry>
+    <title>Khắc phục lỗi OpenClaw theo bằng chứng</title>
+    <id>https://160218tt-sys.github.io/gau-ai-systems/khac-phuc-loi-openclaw/</id>
+    <link href="https://160218tt-sys.github.io/gau-ai-systems/khac-phuc-loi-openclaw/"/>
+    <updated>2026-09-28T03:00:00+07:00</updated>
+    <summary>Chuỗi triage có giới hạn: version, status, Gateway probe, doctor và logs; không gửi secret hoặc dữ liệu khách hàng.</summary>
+  </entry>
+</feed>

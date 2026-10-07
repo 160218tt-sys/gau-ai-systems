@@ -6,7 +6,7 @@
 
 - Chưa nhận thanh toán hoặc xác nhận lịch; payment và scheduling chưa khả dụng cho đến khi readiness gate cho phép.
 - CTA chỉ là kiểm tra điều kiện hoặc ghi nhận quan tâm.
-- Mức 20 USD là phí dịch vụ dự kiến cho một máy đủ điều kiện, không phải phí bản quyền OpenClaw.
+- Mức 500.000 VND là phí dịch vụ dự kiến cho một máy đủ điều kiện, không phải phí bản quyền OpenClaw.
 - Phí model, API, cloud/VPS, kênh chat và dịch vụ bên thứ ba tách riêng.
 - Không bảo đảm ROI, doanh thu, uptime tuyệt đối, indexing, ranking hoặc an toàn tuyệt đối.
 - Không gửi mật khẩu, OTP, API key, token, recovery code hoặc dữ liệu khách hàng.

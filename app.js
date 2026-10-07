@@ -69,7 +69,7 @@
     const note = ($('#pc-note')?.value || '').trim();
     const needsSeparateReview = admin !== 'yes' || model !== 'yes' || need !== 'core';
     const outcome = needsSeparateReview
-      ? 'Cần khảo sát thêm; chưa thể xem là phù hợp gói lõi 20 USD.'
+      ? 'Cần khảo sát thêm; chưa thể xem là phù hợp gói lõi 500.000 VND.'
       : 'Có dấu hiệu phù hợp bước sàng lọc ban đầu; vẫn cần đội ngũ xác minh readiness trước khi nhận đơn.';
     const lines = [
       'YÊU CẦU KHẢO SÁT OPENCLAW — KHÔNG CHỨA SECRET',

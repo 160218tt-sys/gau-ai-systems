@@ -6,6 +6,8 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const ORIGIN = 'https://160218tt-sys.github.io/gau-ai-systems';
 const routes = [
   {path:'index.html',url:`${ORIGIN}/`,lang:'vi'},
+  {path:'gioi-thieu/index.html',url:`${ORIGIN}/gioi-thieu/`,lang:'vi',brandPage:true},
+  {path:'lien-he-kiem-tra-dieu-kien/index.html',url:`${ORIGIN}/lien-he-kiem-tra-dieu-kien/`,lang:'vi',brandPage:true},
   {path:'cai-openclaw/index.html',url:`${ORIGIN}/cai-openclaw/`,lang:'vi',buyerTask:true},
   {path:'openclaw-windows-vps/index.html',url:`${ORIGIN}/openclaw-windows-vps/`,lang:'vi',buyerTask:true},
   {path:'cau-hinh-bao-mat-openclaw/index.html',url:`${ORIGIN}/cau-hinh-bao-mat-openclaw/`,lang:'vi',buyerTask:true},
@@ -44,7 +46,7 @@ for (const route of routes) {
   const canonical = links(html).find(t => /\brel=["']canonical["']/i.test(t));
   ok(canonical && /\bhref=["']([^"']+)["']/i.exec(canonical)?.[1] === route.url, `${route.path}: self canonical`);
   const found = new Map(links(html).filter(t => /\brel=["']alternate["']/i.test(t)).map(t => [/\bhreflang=["']([^"']+)["']/i.exec(t)?.[1], /\bhref=["']([^"']+)["']/i.exec(t)?.[1]]));
-  if (route.buyerTask) ok(found.get('vi') === route.url && found.get('x-default') === `${ORIGIN}/en/`, `${route.path}: scoped vi/x-default hreflang`);
+  if (route.buyerTask || route.brandPage) ok(found.get('vi') === route.url && found.get('x-default') === `${ORIGIN}/en/`, `${route.path}: scoped vi/x-default hreflang`);
   else ok(found.size === alternates.size && [...alternates].every(([k,v]) => found.get(k) === v), `${route.path}: reciprocal hreflang and x-default`);
   ok(metas(html,'property','og:title') && metas(html,'property','og:description') && metas(html,'property','og:url') === route.url, `${route.path}: localized Open Graph`);
   const jsonBlocks = [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
@@ -54,17 +56,22 @@ for (const route of routes) {
   ok((html.match(/<h1\b/gi) || []).length === 1, `${route.path}: single h1`);
   for (const image of html.match(/<img\b[^>]*>/gi) || []) ok(/\balt=["'][^"']*["']/i.test(image), `${route.path}: image alt`);
   ok(/class=["'][^"']*announcement/.test(html) && /(survey|survei|tinjauan|khảo sát|意向|関心|관심)/i.test(html), `${route.path}: readiness banner`);
-  if (route.buyerTask) {
+  if (route.buyerTask || route.brandPage) {
     const schemaTypes = jsonDocs.flatMap(doc => (doc['@graph'] || [doc]).map(item => item['@type']));
     for (const type of ['Organization','Service','BreadcrumbList','FAQPage']) ok(schemaTypes.includes(type), `${route.path}: ${type} schema`);
-    ok(/mã nguồn mở/i.test(html), `${route.path}: open-source disclosure`);
-    ok(/chưa nhận tiền|chưa có payment/i.test(html) && /chưa xác nhận lịch|scheduling/i.test(html), `${route.path}: payment and scheduling ceiling`);
-    ok(/không bảo đảm|không cam kết/i.test(html), `${route.path}: no-guarantee disclosure`);
-    ok(/#precheck|ghi nhận quan tâm/i.test(html), `${route.path}: precheck/interest-only CTA`);
+    ok(/chưa nhận tiền|chưa có payment|chưa nhận thanh toán/i.test(html) && /chưa xác nhận lịch|chưa nhận tiền hoặc xác nhận lịch|scheduling/i.test(html), `${route.path}: payment and scheduling ceiling`);
+    ok(/#precheck|ghi nhận quan tâm|kiểm tra điều kiện/i.test(html), `${route.path}: precheck/interest-only CTA`);
+    if (route.buyerTask) {
+      ok(/mã nguồn mở/i.test(html), `${route.path}: open-source disclosure`);
+      ok(/không bảo đảm|không cam kết/i.test(html), `${route.path}: no-guarantee disclosure`);
+    } else {
+      ok(/Gấu AI Systems/i.test(html), `${route.path}: canonical brand name`);
+      ok(!/<form\b/i.test(html), `${route.path}: no form`);
+    }
   } else {
-    ok(/(?:20 USD|USD 20|20 美元|20\s*달러|20米ドル)/i.test(html), `${route.path}: active offer`);
+    ok(/(?:500\.000|500,000)\s*VND/i.test(html), `${route.path}: active Vietnam offer`);
   }
-  if (route.path !== 'index.html' && !route.buyerTask) {
+  if (route.path !== 'index.html' && !route.buyerTask && !route.brandPage) {
     ok(!/<form\b/i.test(html), `${route.path}: no form`);
     ok(/no form|formulir|borang|フォーム|양식|表單|表单/i.test(html), `${route.path}: explicitly static/no backend`);
   } else if (route.path === 'index.html') {
@@ -72,9 +79,11 @@ for (const route of routes) {
   }
   ok(!/(google-analytics|googletagmanager|gtag\s*\(|facebook\.net\/.*pixel|segment\.com|mixpanel|hotjar)/i.test(html), `${route.path}: no analytics`);
   ok(/independent|độc lập|independen|bebas|独立|독립/i.test(html), `${route.path}: independent disclaimer`);
-  ok(/secret|API key|APIキー|API 密钥|API 金鑰|API 키/i.test(html), `${route.path}: customer secret boundary`);
-  ok(/third-party|bên thứ ba|pihak ketiga|第三者|제3자|第三方/i.test(html), `${route.path}: third-party cost boundary`);
-  if (!route.buyerTask) ok(/local-only|lokal|setempat|ローカル|로컬|本機|本机/i.test(html), `${route.path}: local-only Gateway`);
+  if (!route.brandPage) {
+    ok(/secret|API key|APIキー|API 密钥|API 金鑰|API 키/i.test(html), `${route.path}: customer secret boundary`);
+    ok(/third-party|bên thứ ba|pihak ketiga|第三者|제3자|第三方/i.test(html), `${route.path}: third-party cost boundary`);
+    if (!route.buyerTask) ok(/local-only|lokal|setempat|ローカル|로컬|本機|本机/i.test(html), `${route.path}: local-only Gateway`);
+  }
 }
 
 const zh = await readFile(resolve(root,'zh-hans/index.html'),'utf8');
@@ -120,6 +129,7 @@ for (const htmlFile of files.filter(f => f.endsWith('.html'))) {
 }
 
 const allText = (await Promise.all(files.filter(f=>/\.(?:html|js|css)$/i.test(f)).map(f=>readFile(f,'utf8')))).join('\n');
+ok(!/(?:20 USD|USD 20|20 美元|20\s*달러|20米ドル)/i.test(allText), 'site: no historical USD 20 in public-facing files');
 ok(!/(our customers include|trusted by \d+|certified partner|official OpenClaw partner|guaranteed ROI|local office at)/i.test(allText), 'site: no fake customer, testimonial, certification, office or ROI claims');
 ok(!/(fetch\s*\(|XMLHttpRequest|WebSocket\s*\(|<form[^>]+action=)/i.test(allText), 'site: no backend submission code');
 console.log(`PASS ${passed} checks across ${routes.length} locale routes and ${files.length} repository files.`);
